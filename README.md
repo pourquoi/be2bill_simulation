@@ -16,7 +16,7 @@ Configure
 Run
 ---
 
-Using [pourquoi/PaymentBe2billBundle][1] in your app, set the ```debug_base_url``` to ```http://localhost:8089/```
+Using [pourquoi/PaymentBe2billBundle](https://github.com/pourquoi/PaymentBe2billBundle) in your app, set the ```debug_base_url``` to ```http://localhost:8089/```
 
 and launch the server
 
