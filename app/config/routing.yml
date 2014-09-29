@@ -1,0 +1,4 @@
+pourquoi_be2bill_simulation:
+    resource: "@PourquoiBe2billSimulationBundle/Resources/config/routing.yml"
+    prefix:   /
+

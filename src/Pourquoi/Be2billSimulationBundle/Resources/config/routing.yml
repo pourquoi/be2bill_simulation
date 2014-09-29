@@ -1,0 +1,17 @@
+payment_be2bill_simulation_form_process:
+    pattern: /form/process
+    defaults: { _controller: PourquoiBe2billSimulationBundle:Simulation:formProcess }
+    requirements:
+        _method: POST
+
+payment_be2bill_simulation_form_process_payment:
+    pattern: /form/process_payment
+    defaults: { _controller: PourquoiBe2billSimulationBundle:Simulation:formProcessPayment }
+    requirements:
+        _method: POST
+
+payment_be2bill_simulation_rest_process:
+    pattern: /service/rest/process
+    defaults: { _controller: PourquoiBe2billSimulationBundle:Simulation:restProcess }
+    requirements:
+        _method: POST

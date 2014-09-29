@@ -1,0 +1,4 @@
+services:
+#    pourquoi_be2bill_simulation.example:
+#        class: Pourquoi\Be2billSimulationBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
