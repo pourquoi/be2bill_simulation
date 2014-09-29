@@ -1,7 +1,7 @@
 Be2bill backend simulation
 ========================
 
-This app intents is to simulate be2bill backend for testing when the sandbox cant be used
+This app intent is to simulate be2bill backend for testing when the sandbox cant be used
 
 Configure
 ---
