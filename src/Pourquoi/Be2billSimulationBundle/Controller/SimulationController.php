@@ -7,6 +7,7 @@ use Pourquoi\PaymentBe2billBundle\Client\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SimulationController extends Controller
 {
@@ -186,8 +187,24 @@ FORM;
 		return new RedirectResponse($this->container->getParameter('return_url'));
 	}
 
-	public function restProcessAction()
+	public function restProcessAction(Request $request)
 	{
+		$request_data = $request->request->get('params');
 
+		$expected_hash = Parameters::getSignature($this->container->getParameter('be2bill_password'), $request_data);
+
+		if( $expected_hash != $request_data['HASH'] ) {
+			return new \Symfony\Component\HttpFoundation\Response(sprintf('invalid hash: received %s, expected %s', $expected_hash, $request_data['HASH']), 400);
+		}
+
+		// todo call notif
+
+		$r = array();
+		$r['EXECCODE'] = '0000';
+		$r['OPERATIONTYPE'] = $request_data['OPERATIONTYPE'];
+		$r['MESSAGE'] = 'The transaction has been accepted';
+		$r['TRANSACTIONID'] = uniqid('tr_');
+
+		return new JsonResponse($r);
 	}
 }
