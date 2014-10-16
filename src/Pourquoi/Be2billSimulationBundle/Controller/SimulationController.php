@@ -168,7 +168,7 @@ FORM;
 		$data['AMOUNT'] = $form_data['AMOUNT'];
 		$data['TRANSACTIONID'] = uniqid('tr_');
 
-		if( isset($form_data['CREATE_ALIAS']) && strtolower($form_data['CREATE_ALIAS']) == 'yes' ) {
+		if( isset($form_data['CREATEALIAS']) && strtolower($form_data['CREATEALIAS']) == 'yes' ) {
 			$data['ALIAS'] = 'AB132465465';
 		}
 
