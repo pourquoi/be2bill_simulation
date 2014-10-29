@@ -931,12 +931,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pourquoi/PaymentBe2billBundle.git",
-                "reference": "95a65eb1495a082455008c36a0e58a843ba7994c"
+                "reference": "cd89a40c1e2dffbac75c279bc099a2b370d1c0ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pourquoi/PaymentBe2billBundle/zipball/95a65eb1495a082455008c36a0e58a843ba7994c",
-                "reference": "95a65eb1495a082455008c36a0e58a843ba7994c",
+                "url": "https://api.github.com/repos/pourquoi/PaymentBe2billBundle/zipball/cd89a40c1e2dffbac75c279bc099a2b370d1c0ce",
+                "reference": "cd89a40c1e2dffbac75c279bc099a2b370d1c0ce",
                 "shasum": ""
             },
             "require": {
@@ -984,7 +984,7 @@
             "support": {
                 "source": "https://github.com/pourquoi/PaymentBe2billBundle/tree/master"
             },
-            "time": "2014-09-29 09:47:58"
+            "time": "2014-10-20 11:54:10"
         },
         {
             "name": "psr/log",

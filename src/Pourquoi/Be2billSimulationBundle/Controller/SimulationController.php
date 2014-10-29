@@ -194,7 +194,7 @@ FORM;
 		$expected_hash = Parameters::getSignature($this->container->getParameter('be2bill_password'), $request_data);
 
 		if( $expected_hash != $request_data['HASH'] ) {
-			return new \Symfony\Component\HttpFoundation\Response(sprintf('invalid hash: received %s, expected %s', $expected_hash, $request_data['HASH']), 400);
+			return new \Symfony\Component\HttpFoundation\Response(sprintf('invalid hash: received %s, expected %s.', $request_data['HASH'], $expected_hash), 400);
 		}
 
 		// todo call notif
@@ -204,6 +204,26 @@ FORM;
 		$r['OPERATIONTYPE'] = $request_data['OPERATIONTYPE'];
 		$r['MESSAGE'] = 'The transaction has been accepted';
 		$r['TRANSACTIONID'] = uniqid('tr_');
+
+		$data = array();
+		$data['EXECCODE'] = '0000';
+		$data['ORDERID'] = $request_data['ORDERID'];
+		$data['OPERATIONTYPE'] = $request_data['OPERATIONTYPE'];
+		if( isset($request_data['AMOUNT']) )
+			$data['AMOUNT'] = $request_data['AMOUNT'];
+		$data['TRANSACTIONID'] = $r['TRANSACTIONID'];
+
+		$ch = curl_init($this->container->getParameter('notification_url'));
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		$res = curl_exec($ch);
+
+		if( 'OK' != $res ) {
+			if( $logger = $this->get('logger') )
+				$logger->error($res);
+		};
 
 		return new JsonResponse($r);
 	}
