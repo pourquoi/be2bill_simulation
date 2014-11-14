@@ -153,6 +153,15 @@ FORM;
 			'5555550082334007' => '4007'
 		);
 
+		$aliases = array(
+			'5555557376384008' => 'AB0001',
+			'5555554530114009' => 'AB0002',
+			'5555550226824010' => 'AB0003',
+			'5555558726544011' => 'AB0004',
+			'5555550082334012' => 'AB0005',
+			'5555550082334013' => 'AB0006'
+		);
+
 		$r = $request->request->all();
 
 		if( $form_data['ORDERID'] != $r['ORDERID'] ) {
@@ -170,7 +179,7 @@ FORM;
 		$data['TRANSACTIONID'] = uniqid('tr_');
 
 		if( isset($form_data['CREATEALIAS']) && strtolower($form_data['CREATEALIAS']) == 'yes' ) {
-			$data['ALIAS'] = 'AB132465465';
+			$data['ALIAS'] = isset($aliases[$r['CARDCODE']]) ? $aliases[$r['CARDCODE']] : 'AB0000';
 		}
 
 		$ch = curl_init($this->container->getParameter('notification_url'));
@@ -197,16 +206,23 @@ FORM;
 			return new \Symfony\Component\HttpFoundation\Response(sprintf('invalid hash: received %s, expected %s.', $request_data['HASH'], $expected_hash), 400);
 		}
 
-		// todo call notif
+		$execcodes = array(
+			'AB0001' => '4001',
+			'AB0002' => '4002',
+			'AB0003' => '4003',
+			'AB0004' => '4005',
+			'AB0005' => '4006',
+			'AB0006' => '4007'
+		);
 
 		$r = array();
-		$r['EXECCODE'] = '0000';
+		$r['EXECCODE'] = isset($execcodes[$request_data['ALIAS']]) ? $execcodes[$request_data['ALIAS']] : '0000';
 		$r['OPERATIONTYPE'] = $request_data['OPERATIONTYPE'];
-		$r['MESSAGE'] = 'The transaction has been accepted';
+		$r['MESSAGE'] = $r['EXECCODE'] == '0000' ? 'The transaction has been accepted' : ('error ' . $r['EXECCODE']);
 		$r['TRANSACTIONID'] = uniqid('tr_');
 
 		$data = array();
-		$data['EXECCODE'] = '0000';
+		$data['EXECCODE'] = $r['EXECCODE'];
 		$data['ORDERID'] = $request_data['ORDERID'];
 		$data['OPERATIONTYPE'] = $request_data['OPERATIONTYPE'];
 		if( isset($request_data['AMOUNT']) )
