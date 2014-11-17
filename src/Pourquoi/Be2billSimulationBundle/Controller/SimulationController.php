@@ -216,7 +216,7 @@ FORM;
 		);
 
 		$r = array();
-		$r['EXECCODE'] = isset($execcodes[$request_data['ALIAS']]) ? $execcodes[$request_data['ALIAS']] : '0000';
+		$r['EXECCODE'] = (isset($request_data['ALIAS']) && isset($execcodes[$request_data['ALIAS']])) ? $execcodes[$request_data['ALIAS']] : '0000';
 		$r['OPERATIONTYPE'] = $request_data['OPERATIONTYPE'];
 		$r['MESSAGE'] = $r['EXECCODE'] == '0000' ? 'The transaction has been accepted' : ('error ' . $r['EXECCODE']);
 		$r['TRANSACTIONID'] = uniqid('tr_');
