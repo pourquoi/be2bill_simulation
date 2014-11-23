@@ -8,9 +8,10 @@ framework:
     profiler:
         collect: false
 
-web_profiler:
-    toolbar: false
-    intercept_redirects: false
-
-swiftmailer:
-    disable_delivery: true
+pourquoi_be2bill_simulation:
+    template_url: ""
+    template_mobile_url: ""
+    notification_url: ""
+    identifier: "id_test"
+    password: "pass_test"
+    return_url: ""

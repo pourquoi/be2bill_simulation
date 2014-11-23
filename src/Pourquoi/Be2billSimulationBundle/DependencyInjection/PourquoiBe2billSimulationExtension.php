@@ -22,6 +22,16 @@ class PourquoiBe2billSimulationExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('be2bill.identifier', $config['identifier']);
+        $container->setParameter('be2bill.password', $config['password']);
+        $container->setParameter('be2bill.notification_url', $config['notification_url']);
+        $container->setParameter('be2bill.template_url', $config['template_url']);
+        if( !$config['template_mobile_url'] )
+            $container->setParameter('be2bill.template_mobile_url', $config['template_url']);
+        else
+            $container->setParameter('be2bill.template_mobile_url', $config['template_mobile_url']);
+        $container->setParameter('be2bill.return_url', $config['return_url']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }

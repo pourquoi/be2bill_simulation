@@ -18,11 +18,30 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('pourquoi_be2bill_simulation');
+        $rootNode = $treeBuilder->root('pourquoi_be2bill_simulation')
+        ->children()
+            ->scalarNode('template_url')
+                ->defaultNull()
+            ->end()
+            ->scalarNode('template_mobile_url')
+                ->defaultNull()
+            ->end()
+            ->scalarNode('notification_url')
+                ->defaultNull()
+            ->end()
+            ->scalarNode('identifier')
+                ->isRequired()
+                ->cannotBeEmpty()
+            ->end()
+            ->scalarNode('password')
+                ->isRequired()
+                ->cannotBeEmpty()
+            ->end()
+            ->scalarNode('return_url')
+                ->defaultNull()
+            ->end()
+        ->end();
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
 
         return $treeBuilder;
     }

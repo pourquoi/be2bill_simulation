@@ -10,6 +10,12 @@ payment_be2bill_simulation_form_process_payment:
     requirements:
         _method: POST
 
+payment_be2bill_simulation_payment_feedback:
+    pattern: /payment_feedback
+    defaults: { _controller: PourquoiBe2billSimulationBundle:Simulation:paymentFeedback }
+    requirements:
+        _method: POST
+
 payment_be2bill_simulation_rest_process:
     pattern: /service/rest/process
     defaults: { _controller: PourquoiBe2billSimulationBundle:Simulation:restProcess }
