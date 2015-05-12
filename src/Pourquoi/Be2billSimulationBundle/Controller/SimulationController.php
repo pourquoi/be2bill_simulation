@@ -92,6 +92,9 @@ class SimulationController extends Controller
 			$data['ALIAS'] = isset($aliases[$r['CARDCODE']]) ? $aliases[$r['CARDCODE']] : 'AB0000';
 		}
 
+		$data['HASH'] = Parameters::getSignature($this->container->getParameter('be2bill.password'), $data);
+		$data = Parameters::sortParameters($data);
+
         if( $notification_url = $this->container->getParameter('be2bill.notification_url') ) {
             $ch = curl_init($notification_url);
             curl_setopt($ch, CURLOPT_POST, true);
@@ -101,13 +104,17 @@ class SimulationController extends Controller
             $res = curl_exec($ch);
 
             if ('OK' != $res) {
-                $this->get('logger')->error(spintrf('notification call failed: %s', $res));
+                $this->get('logger')->error(sprintf('notification call failed: %s, (%s)', $res, print_r($data, 1)));
             };
         }
 
         if( !$return_url = $this->container->getParameter('be2bill.return_url') ) {
             $return_url = $this->generateUrl('payment_be2bill_simulation_payment_feedback');
         }
+
+        $params = http_build_query($data);
+        $return_url .= (strpos($return_url, '?') ? '&' : '?') . $params;;
+
 		return new RedirectResponse($return_url);
 	}
 
@@ -148,6 +155,9 @@ class SimulationController extends Controller
 		if( isset($request_data['AMOUNT']) )
 			$data['AMOUNT'] = $request_data['AMOUNT'];
 		$data['TRANSACTIONID'] = $r['TRANSACTIONID'];
+
+		$data['HASH'] = Parameters::getSignature($this->container->getParameter('be2bill.password'), $data);
+		$data = Parameters::sortParameters($data);
 
 		$ch = curl_init($this->container->getParameter('be2bill.notification_url'));
 		curl_setopt($ch, CURLOPT_POST, true);
